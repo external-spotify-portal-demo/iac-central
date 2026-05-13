@@ -10,7 +10,7 @@ metadata:
     - gcp
     - gke
 spec:
-  owner: group:infraops
+  owner: group:portal/admins
   type: kubernetes
 
   parameters:
@@ -39,8 +39,7 @@ spec:
           ui:field: OwnerPicker
           ui:options:
             catalogFilter:
-              - kind: Group
-              - kind: User
+              - kind: [Group, User]
 
     - title: Configuration
       required:
