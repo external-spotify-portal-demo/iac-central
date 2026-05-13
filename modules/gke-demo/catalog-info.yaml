@@ -1,0 +1,14 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: demo
+  description: "Just a demo"
+  tags:
+    - gcp
+    - gke
+  annotations:
+    github.com/project-slug: spotify-portal-public-demo/central-iac-repo
+spec:
+  type: kubernetes
+  lifecycle: experimental
+  owner: "group:default/team-a"
