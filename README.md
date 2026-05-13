@@ -17,8 +17,7 @@ All modules are located in the `modules/` directory.
 
 ```
 .
-├── template.yaml          # Backstage scaffolder template
-├── skeleton/              # Template skeleton for new GKE modules
+├── templates/             # Template skeleton for new modules
 ├── modules/               # Terraform modules (one directory per resource)
 │   ├── vpc-network/
 │   ├── cloud-sql/
