@@ -10,6 +10,12 @@ variable "region" {
   default     = "europe-west1"
 }
 
+variable "environment" {
+  description = "Deployment environment"
+  type        = string
+  default     = "production"
+}
+
 variable "project_id" {
   description = "GCP project ID"
   type        = string
@@ -32,4 +38,10 @@ variable "master_ipv4_cidr_block" {
   description = "CIDR block for the GKE master"
   type        = string
   default     = "172.16.0.0/28"
+}
+
+variable "release_channel" {
+  description = "GKE release channel"
+  type        = string
+  default     = "STABLE"
 }

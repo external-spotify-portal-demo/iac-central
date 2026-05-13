@@ -40,10 +40,12 @@ spec:
           ui:options:
             catalogFilter:
               - kind: Group
+              - kind: User
 
     - title: Configuration
       required:
         - region
+        - environment
       properties:
         region:
           title: GCP Region
@@ -53,6 +55,15 @@ spec:
             - europe-west1
             - us-central1
             - asia-east1
+        environment:
+          title: Environment
+          type: string
+          description: Deployment environment
+          enum:
+            - production
+            - staging
+            - development
+          default: production
 
   steps:
     - id: template
@@ -65,6 +76,7 @@ spec:
           description: ${{ parameters.description }}
           owner: ${{ parameters.owner }}
           region: ${{ parameters.region }}
+          environment: ${{ parameters.environment }}
 
     - id: publish
       name: Create Pull Request
@@ -77,6 +89,7 @@ spec:
           This PR adds a new GKE cluster module `${{ parameters.component_id }}`.
 
           **Region:** ${{ parameters.region }}
+          **Environment:** ${{ parameters.environment }}
           **Owner:** ${{ parameters.owner }}
           **Description:** ${{ parameters.description }}
         targetPath: modules/gke-${{ parameters.component_id }}
@@ -94,5 +107,5 @@ spec:
 
           After provisioning, connect to your cluster with:
           ```
-          gcloud container clusters get-credentials ${{ parameters.component_id }} --region ${{ parameters.region }} --project spotify-portal-public-demo
+          gcloud container clusters get-credentials ${{ parameters.component_id }} --region ${{ parameters.region }} --project iac-central
           ```

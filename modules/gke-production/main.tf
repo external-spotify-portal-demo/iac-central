@@ -35,14 +35,14 @@ resource "google_container_cluster" "primary" {
   ip_allocation_policy {}
 
   release_channel {
-    channel = "REGULAR"
+    channel = var.release_channel
   }
 
   resource_labels = {
     managed_by  = "terraform"
-    environment = "production"
+    environment = var.environment
     team        = "backend"
   }
 
-  deletion_protection = true
+  deletion_protection = var.environment == "production" ? true : false
 }
