@@ -1,0 +1,98 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: gcp-gke-template
+  title: GCP - GKE (Kubernetes)
+  description: Add a new GKE (Kubernetes) cluster module to the central IaC repository
+  tags:
+    - infra
+    - terraform
+    - gcp
+    - gke
+spec:
+  owner: group:infraops
+  type: kubernetes
+
+  parameters:
+    - title: About
+      required:
+        - component_id
+      properties:
+        component_id:
+          title: Name
+          type: string
+          description: The unique name of the cluster
+          ui:field: EntityNamePicker
+        description:
+          title: Description
+          type: string
+          description: Description of the cluster
+
+    - title: Ownership
+      required:
+        - owner
+      properties:
+        owner:
+          title: Owner
+          type: string
+          description: Owner of the cluster
+          ui:field: OwnerPicker
+          ui:options:
+            catalogFilter:
+              - kind: Group
+
+    - title: Configuration
+      required:
+        - region
+      properties:
+        region:
+          title: GCP Region
+          type: string
+          description: GCP region of the cluster
+          enum:
+            - europe-west1
+            - us-central1
+            - asia-east1
+
+  steps:
+    - id: template
+      name: Fetch Skeleton
+      action: fetch:template
+      input:
+        url: ./skeleton
+        values:
+          component_id: ${{ parameters.component_id }}
+          description: ${{ parameters.description }}
+          owner: ${{ parameters.owner }}
+          region: ${{ parameters.region }}
+
+    - id: publish
+      name: Create Pull Request
+      action: publish:github:pull-request
+      input:
+        repoUrl: github.com?repo=iac-central&owner=external-spotify-portal-demo
+        title: "Add GKE module: ${{ parameters.component_id }}"
+        branchName: add-gke-${{ parameters.component_id }}
+        description: |
+          This PR adds a new GKE cluster module `${{ parameters.component_id }}`.
+
+          **Region:** ${{ parameters.region }}
+          **Owner:** ${{ parameters.owner }}
+          **Description:** ${{ parameters.description }}
+        targetPath: modules/gke-${{ parameters.component_id }}
+
+  output:
+    links:
+      - title: Pull Request
+        url: ${{ steps.publish.output.remoteUrl }}
+    text:
+      - title: Next Steps
+        content: |-
+          A Pull Request has been created to add the GKE module **${{ parameters.component_id }}** to the central IaC repository.
+
+          Once the PR is reviewed and merged, Terraform will automatically provision your GKE cluster.
+
+          After provisioning, connect to your cluster with:
+          ```
+          gcloud container clusters get-credentials ${{ parameters.component_id }} --region ${{ parameters.region }} --project spotify-portal-public-demo
+          ```

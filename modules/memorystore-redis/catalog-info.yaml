@@ -1,0 +1,15 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: memorystore-redis
+  description: Redis instance for caching and session management
+  tags:
+    - gcp
+    - cache
+    - redis
+  annotations:
+    github.com/project-slug: spotify-portal-public-demo/central-iac-repo
+spec:
+  type: cache
+  lifecycle: production
+  owner: group:infraops

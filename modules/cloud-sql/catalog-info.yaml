@@ -1,0 +1,15 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: cloud-sql
+  description: PostgreSQL database instance
+  tags:
+    - gcp
+    - database
+    - postgresql
+  annotations:
+    github.com/project-slug: spotify-portal-public-demo/central-iac-repo
+spec:
+  type: database
+  lifecycle: production
+  owner: group:infraops

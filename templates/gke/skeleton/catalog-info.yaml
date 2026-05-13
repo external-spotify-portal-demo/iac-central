@@ -1,0 +1,16 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: ${{ values.component_id }}
+  {%- if values.description %}
+  description: ${{ values.description | dump }}
+  {%- endif %}
+  tags:
+    - gcp
+    - gke
+  annotations:
+    github.com/project-slug: spotify-portal-public-demo/central-iac-repo
+spec:
+  type: kubernetes
+  lifecycle: experimental
+  owner: ${{ values.owner | dump }}

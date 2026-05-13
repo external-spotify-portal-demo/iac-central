@@ -1,0 +1,14 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: vpc-network
+  description: Main VPC network with GKE-ready subnets
+  tags:
+    - gcp
+    - networking
+  annotations:
+    github.com/project-slug: spotify-portal-public-demo/central-iac-repo
+spec:
+  type: network
+  lifecycle: production
+  owner: group:infraops
